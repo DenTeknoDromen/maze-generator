@@ -14,7 +14,7 @@ public class Maze {
             for (int rows = 0; rows < squareSize; rows++) {
                 String key = getCord(cols, rows);
                 visited.put(key, false);
-                adjacent.put(key, getAdjacent(cols, rows, squareSize).clone());
+                adjacent.put(key, getAdjacent(cols, rows, squareSize));
             }
         }
 
@@ -24,8 +24,10 @@ public class Maze {
         ArrayList<String> res = new ArrayList<String>();
         dfs(adjacent, visited, cursor, res);
 
-        for (String i : res) {
-            System.out.print(i + " " + visited.get(i));
+        for (int i = 0; i < res.size(); i++) {
+            System.out.print(res.get(i) + " " + visited.get(res.get(i)));
+            if (i % 5 == 0)
+                System.out.println("");
         }
 
     }
@@ -46,9 +48,7 @@ public class Maze {
             cordValues.add(getCord(xPos, yPos + 1));
 
         String[] adjacent = new String[cordValues.size()];
-        for (int i = 0; i < adjacent.length; i++) {
-            adjacent[i] = cordValues.get(i);
-        }
+        adjacent = cordValues.toArray(adjacent);
 
         return adjacent;
     }
