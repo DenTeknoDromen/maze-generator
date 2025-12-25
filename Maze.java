@@ -3,40 +3,39 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class Maze {
+    private int mazeSize;
+    private HashMap<String, String[]> adjacent = new HashMap<String, String[]>();
+    private HashMap<String, Boolean> visited = new HashMap<String, Boolean>();
+    private ArrayList<String> res = new ArrayList<String>();
 
-    public static void main(String[] args) {
+    public Maze(int newMazeSize) {
+        this.mazeSize = newMazeSize;
+    }
 
-        int squareSize = 10;
-
-        HashMap<String, String[]> adjacent = new HashMap<String, String[]>();
-        HashMap<String, Boolean> visited = new HashMap<String, Boolean>();
-        for (int cols = 0; cols < squareSize; cols++) {
-            for (int rows = 0; rows < squareSize; rows++) {
+    public void createMaze() {
+        for (int cols = 0; cols < mazeSize; cols++) {
+            for (int rows = 0; rows < mazeSize; rows++) {
                 String key = getCord(cols, rows);
                 visited.put(key, false);
-                adjacent.put(key, getAdjacent(cols, rows, squareSize));
+                adjacent.put(key, getAdjacent(cols, rows, mazeSize));
             }
         }
 
         Random rand = new Random();
-        String cursor = getCord(rand.nextInt(squareSize), rand.nextInt(squareSize));
-
-        ArrayList<String> res = new ArrayList<String>();
+        String cursor = getCord(rand.nextInt(mazeSize), rand.nextInt(mazeSize));
         dfs(adjacent, visited, cursor, res);
-
-        for (int i = 0; i < res.size(); i++) {
-            System.out.print(res.get(i) + " " + visited.get(res.get(i)));
-            if (i % 5 == 0)
-                System.out.println("");
-        }
 
     }
 
-    static String getCord(int xPos, int yPos) {
+    public ArrayList<String> getRes() {
+        return res;
+    }
+
+    String getCord(int xPos, int yPos) {
         return String.valueOf(xPos + ":" + yPos);
     }
 
-    static String[] getAdjacent(int xPos, int yPos, int maxValue) {
+    String[] getAdjacent(int xPos, int yPos, int maxValue) {
         ArrayList<String> cordValues = new ArrayList<String>();
         if (xPos > 0)
             cordValues.add(getCord(xPos - 1, yPos));
@@ -53,7 +52,7 @@ public class Maze {
         return adjacent;
     }
 
-    static void dfs(HashMap<String, String[]> adjacent, HashMap<String, Boolean> visited, String cursor,
+    void dfs(HashMap<String, String[]> adjacent, HashMap<String, Boolean> visited, String cursor,
             ArrayList<String> res) {
         res.add(cursor);
         visited.put(cursor, true);
