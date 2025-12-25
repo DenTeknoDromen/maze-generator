@@ -7,6 +7,7 @@ public class Maze {
     private HashMap<String, String[]> adjacent = new HashMap<String, String[]>();
     private HashMap<String, Boolean> visited = new HashMap<String, Boolean>();
     private ArrayList<String> res = new ArrayList<String>();
+    private Random rand = new Random();
 
     public Maze(int newMazeSize) {
         this.mazeSize = newMazeSize;
@@ -21,7 +22,6 @@ public class Maze {
             }
         }
 
-        Random rand = new Random();
         String cursor = getCord(rand.nextInt(mazeSize), rand.nextInt(mazeSize));
         dfs(adjacent, visited, cursor, res);
 
@@ -47,7 +47,12 @@ public class Maze {
             cordValues.add(getCord(xPos, yPos + 1));
 
         String[] adjacent = new String[cordValues.size()];
-        adjacent = cordValues.toArray(adjacent);
+        for (int i = 0; i < adjacent.length; i++) {
+            int randPos = rand.nextInt(cordValues.size());
+            adjacent[i] = cordValues.get(randPos);
+            // System.out.println(cordValues.get(randPos));
+            cordValues.remove(randPos);
+        }
 
         return adjacent;
     }
@@ -58,9 +63,18 @@ public class Maze {
         visited.put(cursor, true);
 
         for (String i : adjacent.get(cursor)) {
+            System.out.println(cursor);
+            System.out.println(i);
             if (!visited.get(i)) {
                 dfs(adjacent, visited, i, res);
             }
         }
+        // while (adjacent.get(cursor).length > 0) {
+        //     int i = rand.nextInt(adjacent.get(cursor).length);
+        //     if (!visited.get(i)) {
+        //         dfs(adjacent, visited, adjacent.get(cu), res);
+        //     }
+        // }            
+        // }
     }
 }

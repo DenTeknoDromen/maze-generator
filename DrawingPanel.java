@@ -25,28 +25,24 @@ public class DrawingPanel extends JPanel {
             String[] resSplit = cord.split(":");
             int x = Integer.parseInt(resSplit[0]);
             int y = Integer.parseInt(resSplit[1]);
-            
-            int writeXPos = x - preXPos;
-            int writeYPos = y - preYPos;
-            int direction = (int)(squareSize / (writeXPos * 2));
-            System.out.println(direction);
+
+            int directionX = (int)(squareSize * (x - preXPos / 2.0));
+            int directionY = (int)(squareSize * (y - preYPos / 2.0));
+            // System.out.println(directionX + ":"  + directionY);
             // System.out.println("prePos: " + preXPos + ":" + preYPos);
             // System.out.println("pos: " + x + ":" + y);
             // System.out.println("writePos: " + writeXPos + ":" + writeYPos);
             // System.out.println("----------------------------------------");
-            // g.fillRect((x * squareSize) + 4, (y * squareSize)+ 4, squareSize - 8, squareSize - 8);
-            while (preXPos != x && preYPos != y) {
-                preXPos += writeXPos / 2;
-                preYPos += writeYPos / 2;
-                System.out.println("prePos: " + preXPos + ":" + preYPos);
-                System.out.println("pos: " + x + ":" + y);
-                System.out.println("writePos: " + writeXPos + ":" + writeYPos);
-                System.out.println("----------------------------------------");
-                g.fillRect((preXPos * squareSize) + offset,
-                (preYPos * squareSize)+ offset, 
-                squareSize - (offset * 2), 
-                squareSize - (offset * 2));
-            }
+            g.fillRect((preXPos * squareSize) + (offset), 
+            (preYPos * squareSize) + offset, 
+            squareSize - (offset * 2), 
+            squareSize - (offset * 2));
+
+            g.fillRect((preXPos * squareSize) + (offset + directionX), 
+            (preYPos * squareSize) + (offset + directionY), 
+            squareSize - (offset * 2), 
+            squareSize - (offset * 2));
+
             preXPos = x;
             preYPos = y;
         }
