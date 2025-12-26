@@ -63,8 +63,8 @@ public class Maze {
         visited.put(cursor, true);
 
         for (String i : adjacent.get(cursor)) {
-            System.out.println(cursor);
-            System.out.println(i);
+            // System.out.println(cursor);
+            // System.out.println(i);
             if (!visited.get(i)) {
                 dfs(adjacent, visited, i, res);
             }

@@ -1,10 +1,9 @@
 import javax.swing.*;
-import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {
-        int SIZE = 600;
-        int SQUARESIZE = 25;
+        int SIZE = 672;
+        int SQUARESIZE = 28;
 
         Maze newMaze = new Maze((int)SIZE/SQUARESIZE);
         newMaze.createMaze();
