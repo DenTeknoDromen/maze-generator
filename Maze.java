@@ -27,7 +27,7 @@ public class Maze {
         String cursor = getCord(initPos[0], initPos[1]);
 
         for (int i = 0; i < initPos.length; i++)
-            initPos[i] = (initPos[i] * squareSize) + offset;
+            initPos[i] = getDrawValue(initPos[i], 0);
         drawCells.add(initPos);
 
         dfs(adjacent, visited, cursor, drawCells);
@@ -39,6 +39,10 @@ public class Maze {
 
     String getCord(int xPos, int yPos) {
         return String.valueOf(xPos + ":" + yPos);
+    }
+
+    int getDrawValue(int pos, int direction) {
+        return (pos * squareSize) + (offset + direction);
     }
 
     void createDrawCells(String currPos, String nextPos) {
@@ -53,9 +57,8 @@ public class Maze {
         int directionX = (squareSize / 2) * (nextXPos - currXPos);
         int directionY = (squareSize / 2) * (nextYPos - currYPos);
 
-        int[] diffDraw = { (currXPos * squareSize) + (offset + directionX),
-                (currYPos * squareSize) + (offset + directionY) };
-        int[] nextDraw = { (nextXPos * squareSize) + offset, (nextYPos * squareSize) + offset };
+        int[] diffDraw = { getDrawValue(currXPos, directionX), getDrawValue(currYPos, directionY) };
+        int[] nextDraw = { getDrawValue(nextXPos, 0), getDrawValue(nextYPos, 0) };
 
         drawCells.add(diffDraw);
         drawCells.add(nextDraw);

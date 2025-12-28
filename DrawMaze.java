@@ -8,13 +8,13 @@ public class DrawMaze extends JPanel implements ActionListener {
     private ArrayList<int[]> drawCells;
     private Timer timer;
     private int squareSize;
-    private int offset;
     private int maxIndex;
+    private int wallSize;
 
     public DrawMaze(ArrayList<int[]> drawCells, int squareSize, int offset) {
         this.drawCells = drawCells;
         this.squareSize = squareSize;
-        this.offset = offset;
+        this.wallSize = squareSize - (offset * 2);
         timer = new Timer((int) (1000 / 60), this);
         timer.start();
     }
@@ -27,7 +27,7 @@ public class DrawMaze extends JPanel implements ActionListener {
     private void drawCells(Graphics g) {
         g.setColor(Color.BLACK);
         for (int i = 0; i < maxIndex; i++) {
-            g.fillRect(drawCells.get(i)[0], drawCells.get(i)[1], squareSize - (offset * 2), squareSize - (offset * 2));
+            g.fillRect(drawCells.get(i)[0], drawCells.get(i)[1], wallSize, wallSize);
         }
     }
 
