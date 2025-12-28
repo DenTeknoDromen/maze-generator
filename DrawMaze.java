@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class DrawMaze extends JPanel implements ActionListener{
+public class DrawMaze extends JPanel implements ActionListener {
     private ArrayList<int[]> drawCells;
     private Timer timer;
     private int squareSize;
@@ -15,10 +15,10 @@ public class DrawMaze extends JPanel implements ActionListener{
         this.drawCells = drawCells;
         this.squareSize = squareSize;
         this.offset = offset;
-        timer = new Timer(16, this);
-        timer.start();        
+        timer = new Timer((int) (1000 / 60), this);
+        timer.start();
     }
-    
+
     private void drawBackground(Graphics g) {
         g.setColor(Color.BLUE);
         g.fillRect(0, 0, getWidth(), getHeight());
@@ -41,7 +41,7 @@ public class DrawMaze extends JPanel implements ActionListener{
         for (int y = 0; y < getHeight(); y += squareSize) {
             g.drawLine(0, y, getWidth(), y);
         }
-    }    
+    }
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -55,5 +55,5 @@ public class DrawMaze extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         maxIndex = (maxIndex < drawCells.size() - 1) ? maxIndex + 1 : maxIndex + 0;
         repaint();
-    }    
+    }
 }

@@ -11,10 +11,9 @@ public class Maze {
     private int squareSize;
     private int offset;
 
-
     public Maze(int size, int squareSize, int offset) {
         this.squareSize = squareSize;
-        this.mazeSize = (int)size/squareSize;
+        this.mazeSize = (int) size / squareSize;
         this.offset = offset;
 
         for (int cols = 0; cols < mazeSize; cols++) {
@@ -24,8 +23,13 @@ public class Maze {
                 adjacent.put(key, getAdjacent(cols, rows, mazeSize));
             }
         }
+        int[] initPos = { rand.nextInt(mazeSize), rand.nextInt(mazeSize) };
+        String cursor = getCord(initPos[0], initPos[1]);
 
-        String cursor = getCord(rand.nextInt(mazeSize), rand.nextInt(mazeSize));
+        for (int i = 0; i < initPos.length; i++)
+            initPos[i] = (initPos[i] * squareSize) + offset;
+        drawCells.add(initPos);
+
         dfs(adjacent, visited, cursor, drawCells);
     }
 
@@ -40,7 +44,7 @@ public class Maze {
     void createDrawCells(String currPos, String nextPos) {
         String[] currPosSplit = currPos.split(":");
         int currXPos = Integer.parseInt(currPosSplit[0]);
-        int currYPos = Integer.parseInt(currPosSplit[1]);  
+        int currYPos = Integer.parseInt(currPosSplit[1]);
 
         String[] nextPosSplit = nextPos.split(":");
         int nextXPos = Integer.parseInt(nextPosSplit[0]);
@@ -48,11 +52,11 @@ public class Maze {
 
         int directionX = (squareSize / 2) * (nextXPos - currXPos);
         int directionY = (squareSize / 2) * (nextYPos - currYPos);
-        int[] currDraw = {(currXPos * squareSize) + offset, (currYPos * squareSize) + offset};
-        int[] diffDraw = {(currXPos * squareSize) + (offset + directionX), (currYPos * squareSize) + (offset + directionY)};
-        int[] nextDraw = {(nextXPos * squareSize) + offset, (nextYPos * squareSize) + offset};
 
-        drawCells.add(currDraw);
+        int[] diffDraw = { (currXPos * squareSize) + (offset + directionX),
+                (currYPos * squareSize) + (offset + directionY) };
+        int[] nextDraw = { (nextXPos * squareSize) + offset, (nextYPos * squareSize) + offset };
+
         drawCells.add(diffDraw);
         drawCells.add(nextDraw);
     }
