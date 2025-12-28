@@ -1,18 +1,18 @@
 import javax.swing.*;
 
-public class Main {
+public class Main {    
     public static void main(String[] args) {
         int SIZE = 672;
         int SQUARESIZE = 28;
-
-        Maze newMaze = new Maze((int)SIZE/SQUARESIZE);
-        newMaze.createMaze();
+        int OFFSET = 7;
         
-        JFrame frame = new JFrame("Java Graphics Example");
+        JFrame frame = new JFrame("Maze");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(SIZE, SIZE);
+        frame.setSize(SIZE, SIZE + SQUARESIZE);
+
+        Maze newMaze = new Maze(SIZE, SQUARESIZE, OFFSET);
  
-        DrawingPanel panel = new DrawingPanel(SQUARESIZE, newMaze.getRes());
+        DrawingPanel panel = new DrawingPanel(newMaze.getDrawCells(), SQUARESIZE, OFFSET);
 
         frame.add(panel);
         frame.setVisible(true);
