@@ -12,7 +12,7 @@ public class Main {
 
         Maze newMaze = new Maze(SIZE, SQUARESIZE, OFFSET);
  
-        DrawingPanel panel = new DrawingPanel(newMaze.getDrawCells(), SQUARESIZE, OFFSET);
+        DrawMaze panel = new DrawMaze(newMaze.getDrawCells(), SQUARESIZE, OFFSET);
 
         frame.add(panel);
         frame.setVisible(true);
