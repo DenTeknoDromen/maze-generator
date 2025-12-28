@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 
 public class DrawMaze extends JPanel implements ActionListener {
     private ArrayList<int[]> drawCells;
+    private Image offScreenImage;
+    private Graphics offScreenGraphics;
     private Timer timer;
     private int squareSize;
     private int maxIndex;
@@ -25,7 +27,7 @@ public class DrawMaze extends JPanel implements ActionListener {
     }
 
     private void drawCells(Graphics g) {
-        g.setColor(Color.BLACK);
+        g.setColor(Color.BLACK);  
         for (int i = 0; i < maxIndex; i++) {
             g.fillRect(drawCells.get(i)[0], drawCells.get(i)[1], wallSize, wallSize);
         }
@@ -47,8 +49,15 @@ public class DrawMaze extends JPanel implements ActionListener {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         drawBackground(g);
-        // drawGrid(g);
-        drawCells(g);
+
+        if (offScreenImage == null) {
+            offScreenImage = createImage(getWidth(), getHeight());
+            offScreenGraphics = offScreenImage.getGraphics();
+        }
+        offScreenGraphics.setColor(Color.BLUE);
+        offScreenGraphics.fillRect(0, 0, getWidth(), getHeight());
+        drawCells(offScreenGraphics);
+        g.drawImage(offScreenImage, 0, 0, this);
     }
 
     @Override
