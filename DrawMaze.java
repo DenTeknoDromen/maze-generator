@@ -1,16 +1,22 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class DrawMaze extends JPanel {
+public class DrawMaze extends JPanel implements ActionListener{
     private ArrayList<int[]> drawCells;
+    private Timer timer;
     private int squareSize;
     private int offset;
+    private int maxIndex;
 
     public DrawMaze(ArrayList<int[]> drawCells, int squareSize, int offset) {
         this.drawCells = drawCells;
         this.squareSize = squareSize;
         this.offset = offset;
+        timer = new Timer(16, this);
+        timer.start();        
     }
     
     private void drawBackground(Graphics g) {
@@ -20,8 +26,8 @@ public class DrawMaze extends JPanel {
 
     private void drawCells(Graphics g) {
         g.setColor(Color.BLACK);
-        for (int[] cells : drawCells) {
-            g.fillRect(cells[0], cells[1], squareSize - (offset * 2), squareSize - (offset * 2));
+        for (int i = 0; i < maxIndex; i++) {
+            g.fillRect(drawCells.get(i)[0], drawCells.get(i)[1], squareSize - (offset * 2), squareSize - (offset * 2));
         }
     }
 
@@ -44,4 +50,10 @@ public class DrawMaze extends JPanel {
         // drawGrid(g);
         drawCells(g);
     }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        maxIndex = (maxIndex < drawCells.size() - 1) ? maxIndex + 1 : maxIndex + 0;
+        repaint();
+    }    
 }
